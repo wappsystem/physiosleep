@@ -1,0 +1,60 @@
+<div id=D__ID>
+    <div>
+        VmInclude:__COMPONENT__/g/grid.01.html
+    </div>
+    <script>
+        function F__ID(){
+            //-------------------------------------
+            VmInclude:__COMPONENT__/g/grid.01.js       
+            //-------------------------------------
+            $('#title__ID').text($vm.module_list[$vm.vm['__ID'].name].task_name);            
+            //-------------------------------------
+            var fields="";
+            fields+="Record_ID|UID,certification,australia,experience";
+            fields+=",consent,age,gender,education,years_physio";
+            fields+=",employment,employment_other,not_working,postcode,multiple_sites,no_sites,hours_site_1,hours_site_2,hours_site_3,hours_site_4,principal_scope,principal_scope_other,primary_workplace,primary_workplace_other";
+            fields+=",ptn_chronic,ptn_sleep,ptn_chronic_sleep";
+            fields+=",assess_sd,address_sd,confident_tx_sd,improve_pain_sleep";
+            fields+=",dhi_familiar,dti_clbp,dhi_recommend_1,dhi_recommend_2,dhi_recommend_3,dhi_recommend_4,dhi_recommend_5,dhi_recommend_6,dhi_recommend_7,dhi_recommend_8,dhi_prescribe";
+            fields+=",dshi_familiar,dti_clbp_sd,dshi_recommend_1,dshi_recommend_2,dshi_recommend_3,dshi_recommend_4,dshi_recommend_5,dshi_recommend_other,dshi_prescribe";
+            fields+=",sleep_dhi_confident_1,sleep_dhi_confident_2,sleep_dhi_confident_3,sleep_dhi_confident_4,sleep_dhi_confident_10,sleep_dhi_confident_11,sleep_dhi_confident_other";
+            m.fields=""+fields+",Submit_date,Submitted_by,_Delete";
+  //            m.fields="_Form,"+fields+",Submit_date,Submitted_by,_Delete";
+            //-------------------------------------
+            var cell_render = m.cell_render;
+            m.cell_render=function(records,I,field,td){
+                switch(field){
+                    case 'consent':
+                    case 'dhi_recommend_1':
+                    case 'dhi_recommend_2':
+                    case 'dhi_recommend_3':
+                    case 'dhi_recommend_4':
+                    case 'dhi_recommend_5':
+                    case 'dhi_recommend_6':
+                    case 'dhi_recommend_7':
+                    case 'dhi_recommend_8':
+                    case 'dshi_recommend_1':
+                    case 'dshi_recommend_2':
+                    case 'dshi_recommend_3':
+                    case 'dshi_recommend_4':
+                    case 'dshi_recommend_5':
+                    case 'sleep_dhi_confident_1':
+                    case 'sleep_dhi_confident_2':
+                    case 'sleep_dhi_confident_3':
+                    case 'sleep_dhi_confident_4':
+                    case 'sleep_dhi_confident_10':
+                    case 'sleep_dhi_confident_11':
+                        if(records[I].Data[field]=="on") td.html("1");
+                        else td.html("")
+                    break;
+                }
+                return cell_render;
+            }
+        //-------------------------------------
+
+        }
+    </script>
+    <style>
+        /*VmInclude:__COMPONENT__/g/grid.01.css*/
+    </style>
+</div>
