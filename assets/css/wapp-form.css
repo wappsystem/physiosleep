@@ -243,6 +243,11 @@ padding:10px
     background-color: #29a0b1
   }
 
+  #D__ID .submit_dual_btn{
+    display:flex;
+    justify-content: space-between;
+  }
+
   @media (min-width: 768px) {
     #D__ID fieldset.dynbreaks br {
       display: none;
