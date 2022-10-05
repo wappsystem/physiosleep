@@ -112,6 +112,11 @@ padding:10px
     border-radius: 0.25rem;
   }
 
+  #D__ID .grid-container-7 {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto;
+  }
+
   #D__ID .grid-container-5 {
     display: grid;
     grid-template-columns: auto auto auto auto auto;
@@ -245,6 +250,10 @@ padding:10px
   }
 
   @media (max-width: 768px) {
+    #D__ID .grid-container-7 {
+      grid-template-columns: auto;
+    }
+
     #D__ID .grid-container-5 {
       grid-template-columns: auto;
     }

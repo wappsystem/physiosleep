@@ -17,7 +17,8 @@
             fields+=",assess_sd,address_sd,confident_tx_sd,improve_pain_sleep";
             fields+=",dhi_familiar,dti_clbp,dhi_recommend_1,dhi_recommend_2,dhi_recommend_3,dhi_recommend_4,dhi_recommend_5,dhi_recommend_6,dhi_recommend_7,dhi_recommend_8,dhi_prescribe";
             fields+=",dshi_familiar,dti_clbp_sd,dshi_recommend_1,dshi_recommend_2,dshi_recommend_3,dshi_recommend_4,dshi_recommend_5,dshi_recommend_other,dshi_prescribe";
-            fields+=",sleep_dhi_confident_1,sleep_dhi_confident_2,sleep_dhi_confident_3,sleep_dhi_confident_4,sleep_dhi_confident_10,sleep_dhi_confident_11,sleep_dhi_confident_other";
+            fields+=",sleep_dhi_confident_1,sleep_dhi_confident_2,sleep_dhi_confident_3,sleep_dhi_confident_4,sleep_dhi_confident_5,sleep_dhi_confident_6,sleep_dhi_confident_other";
+            fields+=",security,privacy,regulation,repository,endorsement,development,studies,training,incentives,cost"
             m.fields=""+fields+",Submit_date,Submitted_by,_Delete";
   //            m.fields="_Form,"+fields+",Submit_date,Submitted_by,_Delete";
             //-------------------------------------
@@ -42,8 +43,8 @@
                     case 'sleep_dhi_confident_2':
                     case 'sleep_dhi_confident_3':
                     case 'sleep_dhi_confident_4':
-                    case 'sleep_dhi_confident_10':
-                    case 'sleep_dhi_confident_11':
+                    case 'sleep_dhi_confident_5':
+                    case 'sleep_dhi_confident_6':
                         if(records[I].Data[field]=="on") td.html("1");
                         else td.html("")
                     break;
