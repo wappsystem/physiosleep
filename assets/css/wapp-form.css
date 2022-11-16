@@ -58,6 +58,8 @@ padding:10px
 }
   #D__ID .mt-95 {
     max-width: 800px;
+    margin-left:auto;
+    margin-right:auto;  
   }
 
   #D__ID .textleft {
@@ -229,8 +231,8 @@ padding:10px
   }
 
   #D__ID .submit_btn {
-    width: 100px;
-    padding: 10px 5px;
+    min-width: 100px;
+    padding: 10px 10px;
     color: white;
     background-color: #167d7f;
     border: thin solid black;

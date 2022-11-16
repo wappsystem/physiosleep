@@ -1096,7 +1096,34 @@
                     </div>
                     <div class="formgroup submit_dual_btn" >
                         <button type="button" d=-1 class="submit_btn">Previous</button>
-                        <button type="submit" d=1 class="submit_btn">Submit Survey</button>
+                        <button type="submit" d=1 class="submit_btn">Next</button>
+                    </div>        
+                </div>
+                <div id=captcha__ID style="display:none;">
+                    <div class="formgroup textcenter">
+                        <h3 class="header_text">To make sure you are not a robot.</h3>
+                        <div class="textcenter">
+                            <img id="captcha_img__ID" />
+                        </div>
+                        <fieldset class="">
+                            <div class="grid-container-3">
+                                <div ><label><span class="question">&nbsp;</span></label>
+                                    <input style="display:none" type=text name="_captcha_hash" class=formcontrol />
+                                </div>
+                                <div><label><span class="question">Please type in the number and letters in the image in the box below.</span></label>
+                                    <input type=text name="_captcha_code" class=formcontrol />
+                                </div>
+                                <div><label><span class="question">&nbsp;</span></label>
+                                    <input style="display:none" type=text name="_captcha_time" class=formcontrol />
+                                </div>
+                            </div>
+                            <p id="captcha_error__ID" style="display:none;color:red">Some letters or numbers are not correct. Please try again.</p>
+                            <div class="textright">
+                                <div class="">
+                                    <button type="submit" d=1 class="submit_btn" >Submit Survey</button>
+                                </div>
+                            </div>
+                        </fieldset>
                     </div>
                 </div>
             </form>
@@ -1109,13 +1136,23 @@
             var N = 10;
             var current_I = 1;
             var registration_ready = false;
+            var notelig=0;
+            //---------------------------------------
+            captcha_func=function(){
+                $vm.request({api:m.api,cmd:'captcha'},function(res){
+                    $('#F__ID input[name=_captcha_hash]').val(res.result.hash);
+                    $('#F__ID input[name=_captcha_time]').val(res.result.time);
+                    $('#captcha_img__ID').prop("src",res.result.img);
+                })
+            };
             //---------------------------------------
             //m.before_submit = function (data, index) {
             //return true;
             //}
             //---------------------------------------
             $('#D__ID').on('load', function () {
-
+                notelig=0;
+                captcha_func();
                 $('#page_counter').text("Screening Questions");
                 if ($('#F__ID input[name=employment]:checked').val() == '4') {
                     $('#employment__ID').show();
@@ -1415,6 +1452,10 @@
                 d = parseInt(d);
                 if (d < 0) show_section(current_I - 1);
                 else {
+                    if(notelig>0){
+                        $('#F__ID *').removeAttr('disabled');
+                        old_submit(event);
+                    }
                     //do nothing, m.submit will handle  
                 }
             })
@@ -1458,29 +1499,39 @@
                     if ($("input[name='certification']:checked").val() == '0' ||
                         $("input[name='australia']:checked").val() == '0' ||
                         $("input[name='experience']:checked").val() == '0') {
-                        $('#F__ID *').removeAttr('disabled');
-                        old_submit(event);
-                        if (m.prefix == undefined) {
-                            $vm.load_module('not_eligp1', '', {});
-                        }
-                        else {
-                            $vm.load_module(m.prefix + 'not_elig1', '', {})
-                        }
+                            notelig=current_I;
+                            $('#S' + current_I + '__ID').hide();
+                            $("#captcha__ID").show();
                     }
                     else {
                         show_section(current_I + 1);
                     }
                 }
                 else if (current_I == N) {
-                    // registration_ready=true
-                    $('#F__ID *').removeAttr('disabled');
-                    old_submit(event);
-                    if (m.prefix == undefined) { $vm.load_module('contact-form', '', {}); }
-                    else $vm.load_module(m.prefix + 'contact-form', '', {});
+                    notelig=current_I;
+                    $('#S' + current_I + '__ID').hide();
+                    $("#captcha__ID").show();
                 }
                 else show_section(current_I + 1);
             }
             //--------------------------------
+            m.after_insert = function (data,res) {
+                //console.log(JSON.stringify(res) + " - "+notelig)
+                if(notelig==1 && res.status!="captcha-error"){
+                    if (m.prefix == undefined) { $vm.load_module('not_elig1', '', {}); }
+                    else $vm.load_module(m.prefix + 'not_elig1', '', {});
+                }
+                else if(notelig>1 && res.status!="captcha-error"){
+                    if (m.prefix == undefined) { $vm.load_module('contact-form', '', {}); }
+                    else $vm.load_module(m.prefix + 'contact-form', '', {});
+                }
+                else{
+                    captcha_func();
+                    $("#captcha_error__ID").show()
+                    $('#D__ID input[name=_captcha_code]').val('');
+                }
+            }
+
         }
     </script>
     <style>
